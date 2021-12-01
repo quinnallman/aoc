@@ -1,5 +1,3 @@
-#![allow(dead_code)]
-
 use ansi_term::Colour;
 use std::io::{BufReader, BufRead};
 use std::fs::File;
