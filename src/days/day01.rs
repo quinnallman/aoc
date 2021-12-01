@@ -6,10 +6,9 @@ use std::fs::File;
 pub fn a() {
     let f = BufReader::new(File::open("input/day01.txt").unwrap());
     let mut count = 0;
-    let iter = f.lines();
     let mut last = 0;
     
-    for line in iter {
+    for line in f.lines() {
         let next = line.unwrap().parse().unwrap();
         if last != 0 && next > last {
             count += 1;
