@@ -1,5 +1,6 @@
 #![allow(dead_code)]
 
+use ansi_term::Colour;
 use std::io::{BufReader, BufRead};
 use std::fs::File;
 
@@ -16,7 +17,7 @@ pub fn a() {
         last = next;
     }
 
-    println!("{}", count);
+    println!("{}", Colour::Green.paint(count.to_string()));
 }
 
 pub fn b() {
@@ -37,5 +38,5 @@ pub fn b() {
         last = sum;
     }
 
-    println!("{}", count);
+    println!("{}", Colour::Green.paint(count.to_string()));
 }
