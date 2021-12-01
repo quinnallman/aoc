@@ -4,7 +4,12 @@ use ansi_term::Colour;
 use std::io::{BufReader, BufRead};
 use std::fs::File;
 
-pub fn a() {
+pub fn run() {
+    a();
+    b();
+}
+
+fn a() {
     let f = BufReader::new(File::open("input/day01.txt").unwrap());
     let mut count = 0;
     let mut last = 0;
@@ -20,12 +25,16 @@ pub fn a() {
     println!("{}", Colour::Green.paint(count.to_string()));
 }
 
-pub fn b() {
+fn b() {
     let f = BufReader::new(File::open("input/day01.txt").unwrap());
     let mut nums: Vec<i64> = Vec::new();
     for line in f.lines() {
         let num = line.unwrap().parse().unwrap();
         nums.push(num);
+    }
+
+    if nums.len() < 3 {
+        panic!("FEED ME MORE");
     }
 
     let mut count = 0;
