@@ -3,6 +3,7 @@ mod days;
 use days::day01;
 use ansi_term::Colour::{Green, Red, Yellow};
 use std::env;
+use std::time::Instant;
 
 fn main() {
     let args: Vec<String> = env::args().collect();
@@ -26,7 +27,10 @@ fn main() {
         };
 
         println!("{}", Yellow.paint(format!("=== Day {:02} ===", day)));
+        let start = Instant::now();
         let result = func();
+        let duration = start.elapsed();
+        println!("({}, {}) ({:.3}ms)", Green.paint(result.0.to_string()), Green.paint(result.1.to_string()), duration.as_millis());
 
         if i < days.len() - 1 {
             println!();
