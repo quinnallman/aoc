@@ -1,7 +1,7 @@
 mod days;
 
-use days::day01;
 use ansi_term::Colour::{Green, Red, Yellow};
+use days::{day01, day02};
 use std::env;
 use std::time::Instant;
 
