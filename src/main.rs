@@ -1,7 +1,7 @@
 mod days;
 
-use ansi_term::Colour;
 use days::day01;
+use ansi_term::Colour::{Green, Red, Yellow};
 use std::env;
 
 fn main() {
@@ -17,16 +17,16 @@ fn main() {
     
     for (i, day) in days.iter().enumerate() {
         let func = match day {
-            1 => Some(day01::run),
-            _ => None,
+            1 => day01::run,
+            2 => day02::run,
+            _ => {
+                println!("{}", Red.paint(format!("!!! I don't know what to do for day {} !!!", day)));
+                break;
+            },
         };
 
-        if let Some(func) = func {
-            println!("{}", Colour::Yellow.paint(format!("=== Day {:02} ===", day)));
-            func();
-        } else {
-            println!("{}", Colour::Red.paint(format!("!!! I don't know what to do for day {} !!!", day)));
-        }
+        println!("{}", Yellow.paint(format!("=== Day {:02} ===", day)));
+        let result = func();
 
         if i < days.len() - 1 {
             println!();
