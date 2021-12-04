@@ -47,19 +47,18 @@ fn a() -> i64 {
 
 fn b() -> i64 {
     let f = BufReader::new(File::open("input/day03.txt").unwrap());
-    let strings: Vec<String> = f.lines().map(|s| s.unwrap()).collect();
+    let mut strings: Vec<String> = f.lines().map(|s| s.unwrap()).collect();
 
-    let mut oxy_strs = strings.clone();
     let mut co2_strs = strings.clone();
 
     let mut index = 0;
-    while oxy_strs.len() > 1 {
-        let (count_0, count_1) = count_binary_digits(&oxy_strs);
+    while strings.len() > 1 {
+        let (count_0, count_1) = count_binary_digits(&strings);
     
         if count_1[index] >= count_0[index] {
-            oxy_strs.retain(|x| x.chars().nth(index).unwrap() == '1');
+            strings.retain(|x| x.chars().nth(index).unwrap() == '1');
         } else {
-            oxy_strs.retain(|x| x.chars().nth(index).unwrap() == '0');
+            strings.retain(|x| x.chars().nth(index).unwrap() == '0');
         }
 
         index += 1;
@@ -78,7 +77,7 @@ fn b() -> i64 {
         index += 1;
     }
 
-    let oxy = i64::from_str_radix(&(oxy_strs.pop().unwrap())[..], 2).unwrap();
+    let oxy = i64::from_str_radix(&(strings.pop().unwrap())[..], 2).unwrap();
     let co2 = i64::from_str_radix(&(co2_strs.pop().unwrap())[..], 2).unwrap();
 
     oxy * co2
