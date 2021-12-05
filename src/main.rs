@@ -1,7 +1,7 @@
 mod days;
 
 use ansi_term::Colour::{Green, Red, Yellow};
-use days::{day01, day02, day03};
+use days::{day01, day02, day03, day04};
 use std::env;
 use std::time::Instant;
 
@@ -21,6 +21,7 @@ fn main() {
             1 => day01::run,
             2 => day02::run,
             3 => day03::run,
+            4 => day04::run,
             _ => {
                 println!("{}", Red.paint(format!("!!! I don't know what to do for day {} !!!", day)));
                 break;
