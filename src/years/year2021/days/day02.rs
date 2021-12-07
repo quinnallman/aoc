@@ -6,7 +6,7 @@ pub fn run() -> (i64, i64) {
 }
 
 fn a() -> i64 {
-    let f = BufReader::new(File::open("input/day02.txt").unwrap());
+    let f = BufReader::new(File::open("input/2021/day02.txt").unwrap());
     let mut position = (0, 0);
     
     for line in f.lines() {
@@ -35,7 +35,7 @@ fn a() -> i64 {
 }
 
 fn b() -> i64 {
-    let f = BufReader::new(File::open("input/day02.txt").unwrap());
+    let f = BufReader::new(File::open("input/2021/day02.txt").unwrap());
     let mut position = (0, 0, 0);
     
     for line in f.lines() {

@@ -70,7 +70,7 @@ fn sum_unmarked(board: [i64; 25]) -> i64 {
 }
 
 fn a() -> (i64, i64) {
-    let f = BufReader::new(File::open("input/day04.txt").unwrap());
+    let f = BufReader::new(File::open("input/2021/day04.txt").unwrap());
     let mut iter = f.lines();
     let moves: Vec<i64> = iter.next().unwrap().unwrap().split(',').map(|x| x.parse::<i64>().unwrap()).collect();
     let mut min_moves: i64 = 1000000;

@@ -3,7 +3,7 @@ pub fn run() -> (i64, i64) {
 }
 
 fn a() -> i64 {
-    let mut input: Vec<i64> = std::fs::read_to_string("input/day06.txt").unwrap().split(',').map(|x| x.parse::<i64>().unwrap()).collect();
+    let mut input: Vec<i64> = std::fs::read_to_string("input/2021/day06.txt").unwrap().split(',').map(|x| x.parse::<i64>().unwrap()).collect();
     let mut new_fish = Vec::<i64>::new();
 
     for _ in 0..80 {
@@ -23,14 +23,15 @@ fn a() -> i64 {
 }
 
 fn b() -> i64 {
-    let input: Vec<i64> = std::fs::read_to_string("input/day06.txt").unwrap().split(',').map(|x| x.parse::<i64>().unwrap()).collect();
+    let input: Vec<i64> = std::fs::read_to_string("input/2021/day06.txt").unwrap().split(',').map(|x| x.parse::<i64>().unwrap()).collect();
 
     // sum of fish for each "age" (days until multiplying)
     let mut count = [0; 9];
 
     // starting ages
+    //for i in input.iter() {
     for i in input.iter() {
-        count[(*i % 9) as usize] += 1;
+        count[(i % 9) as usize] += 1;
     }
 
     // every day shift each fish down one day towards multiplying

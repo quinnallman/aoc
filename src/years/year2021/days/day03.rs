@@ -23,7 +23,7 @@ fn count_binary_digits(strs: &[String]) -> ([i64; 12], [i64; 12]) {
 }
 
 fn a() -> i64 {
-    let f = BufReader::new(File::open("input/day03.txt").unwrap());
+    let f = BufReader::new(File::open("input/2021/day03.txt").unwrap());
     let strings: Vec<String> = f.lines().map(|s| s.unwrap()).collect();
 
     let (count_0, count_1) = count_binary_digits(&strings);
@@ -46,7 +46,7 @@ fn a() -> i64 {
 }
 
 fn b() -> i64 {
-    let f = BufReader::new(File::open("input/day03.txt").unwrap());
+    let f = BufReader::new(File::open("input/2021/day03.txt").unwrap());
     let mut strings: Vec<String> = f.lines().map(|s| s.unwrap()).collect();
 
     let mut co2_strs = strings.clone();

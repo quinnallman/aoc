@@ -6,7 +6,7 @@ pub fn run() -> (i64, i64) {
 }
 
 fn a() -> i64 {
-    let f = BufReader::new(File::open("input/day01.txt").unwrap());
+    let f = BufReader::new(File::open("input/2021/day01.txt").unwrap());
     let mut count = 0;
     let mut last = 0;
     
@@ -22,7 +22,7 @@ fn a() -> i64 {
 }
 
 fn b() -> i64 {
-    let f = BufReader::new(File::open("input/day01.txt").unwrap());
+    let f = BufReader::new(File::open("input/2021/day01.txt").unwrap());
     let mut nums: Vec<i64> = Vec::new();
     for line in f.lines() {
         let num = line.unwrap().parse().unwrap();
