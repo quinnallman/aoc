@@ -1,8 +1,8 @@
 mod years;
 
 use ansi_term::Colour::{Green, Red, Yellow};
-//use years::year2015::days::{day01, day02, day03, day04, day05, day06, day07, day08};
-use years::year2021::days::{day01, day02, day03, day04, day05, day06, day07, day08};
+use years::year2015::days::{day01, day02, day03, day04, day05, day06, day07, day08, day09};
+//use years::year2021::days::{day01, day02, day03, day04, day05, day06, day07, day08};
 use std::env;
 use std::time::Instant;
 
@@ -27,6 +27,7 @@ fn main() {
             6 => day06::run,
             7 => day07::run,
             8 => day08::run,
+            9 => day09::run,
             _ => {
                 println!("{}", Red.paint(format!("!!! I don't know what to do for day {} !!!", day)));
                 break;
