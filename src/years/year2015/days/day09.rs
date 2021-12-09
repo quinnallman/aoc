@@ -1,10 +1,5 @@
 use std::{io::{BufReader, BufRead}, fs::File, str::FromStr, collections::HashMap};
-
 use itertools::Itertools;
-
-pub fn run() -> (i64, i64) {
-    (a(), b())
-}
 
 #[derive(Debug)]
 struct Entry {
@@ -27,41 +22,6 @@ impl FromStr for Entry {
     }
 }
 
-fn tsp(s: usize, n: &Vec<usize>, v: &mut [bool; 10], d: &[[i64; 10]; 10]) -> i64 {
-    println!("tsp({}, {:?}, {:?})", s, n, v);
-    v[s] = true;
-    if n.len() == 2 {
-        let mut n2 = n.clone();
-        let k1 = n2.pop().unwrap();
-        let k2 = n2.pop().unwrap();
-        println!("tsp({}, {:?}, {:?}) = {}", s, n, v, d[k1][k2]);
-        return d[k1][k2];
-    }
-
-    let mut min = i64::MAX;
-    for &j in n {
-        for &i in n {
-            if v[i] {
-                continue;
-            }
-
-            if j != i && j != s {
-                let mut n2 = n.clone();
-                let p = n2.swap_remove(i);
-                println!("Removed {}", p);
-                let cost = tsp(j, &n2, v, d);
-                if cost < min {
-                    min = cost;
-                }
-                v[j] = true;
-            }
-        }
-    }
-
-    println!("tsp({}, {:?}, {:?}) = {}", s, n, v, min);
-    min
-}
-
 fn cost(cities: Vec<usize>, adj: &[[i64; 10]; 10]) -> i64 {
     let mut sum = 0;
     for (&c1, &c2) in cities.iter().tuple_windows() {
@@ -71,8 +31,8 @@ fn cost(cities: Vec<usize>, adj: &[[i64; 10]; 10]) -> i64 {
 }
 
 fn rtsp(curr: Vec<usize>, left: Vec<usize>, adj: &[[i64; 10]; 10]) -> i64 {
-    if left.len() == 0 {
-        return cost(curr.clone(), adj);
+    if left.is_empty() {
+        return cost(curr, adj);
     }
 
     let mut min = i64::MAX;
@@ -91,8 +51,8 @@ fn rtsp(curr: Vec<usize>, left: Vec<usize>, adj: &[[i64; 10]; 10]) -> i64 {
 }
 
 fn rtsp_max(curr: Vec<usize>, left: Vec<usize>, adj: &[[i64; 10]; 10]) -> i64 {
-    if left.len() == 0 {
-        return cost(curr.clone(), adj);
+    if left.is_empty() {
+        return cost(curr, adj);
     }
 
     let mut max = 0;
@@ -110,7 +70,7 @@ fn rtsp_max(curr: Vec<usize>, left: Vec<usize>, adj: &[[i64; 10]; 10]) -> i64 {
     max
 }
 
-fn a() -> i64 {
+pub fn a() -> i64 {
     let f = BufReader::new(File::open("input/2015/day09.txt").unwrap());
 
     let mut count = 0;
@@ -137,7 +97,7 @@ fn a() -> i64 {
     rtsp(Vec::new(), (0..count).collect::<Vec<usize>>(), &adj_matrix)
 }
 
-fn b() -> i64 {
+pub fn b() -> i64 {
     let f = BufReader::new(File::open("input/2015/day09.txt").unwrap());
 
     let mut count = 0;

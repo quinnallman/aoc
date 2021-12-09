@@ -2,10 +2,6 @@ use std::fs::File;
 use std::io::{BufReader, BufRead};
 use itertools::Itertools;
 
-pub fn run() -> (i64, i64) {
-    (a(), b())
-}
-
 fn is_vowel(c: char) -> bool {
     c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u'
 }
@@ -14,7 +10,7 @@ fn vowel_count(s: String) -> i32 {
     s.chars().filter(|c| is_vowel(*c)).count() as i32
 }
 
-fn a() -> i64 {
+pub fn a() -> i64 {
     let f = BufReader::new(File::open("input/2015/day05.txt").unwrap());
     
     let mut nice_names = 0;
@@ -42,7 +38,7 @@ fn a() -> i64 {
     nice_names
 }
 
-fn b() -> i64 {
+pub fn b() -> i64 {
     let f = BufReader::new(File::open("input/2015/day05.txt").unwrap());
     
     let mut nice_names = 0;

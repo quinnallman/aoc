@@ -1,10 +1,6 @@
 use std::io::{BufReader, BufRead};
 use std::fs::File;
 
-pub fn run() -> (i64, i64) {
-    (a(), b())
-}
-
 fn count_binary_digits(strs: &[String]) -> ([i64; 12], [i64; 12]) {
     let mut count_0 = [0; 12];
     let mut count_1 = [0; 12];
@@ -22,7 +18,7 @@ fn count_binary_digits(strs: &[String]) -> ([i64; 12], [i64; 12]) {
     (count_0, count_1)
 }
 
-fn a() -> i64 {
+pub fn a() -> i64 {
     let f = BufReader::new(File::open("input/2021/day03.txt").unwrap());
     let strings: Vec<String> = f.lines().map(|s| s.unwrap()).collect();
 
@@ -45,7 +41,7 @@ fn a() -> i64 {
     gamma * epsilon
 }
 
-fn b() -> i64 {
+pub fn b() -> i64 {
     let f = BufReader::new(File::open("input/2021/day03.txt").unwrap());
     let mut strings: Vec<String> = f.lines().map(|s| s.unwrap()).collect();
 

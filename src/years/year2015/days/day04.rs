@@ -1,8 +1,4 @@
-pub fn run() -> (i64, i64) {
-    (a(), b())
-}
-
-fn a() -> i64 {
+pub fn a() -> i64 {
     let key = String::from("ckczppom");
 
     let mut num = 0;
@@ -19,7 +15,7 @@ fn a() -> i64 {
     num
 }
 
-fn b() -> i64 {
+pub fn b() -> i64 {
     let key = String::from("ckczppom");
 
     let mut num = 0;

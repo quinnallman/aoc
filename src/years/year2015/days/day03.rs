@@ -1,10 +1,6 @@
 use std::{fs, collections::HashMap};
 
-pub fn run() -> (i64, i64) {
-    (a(), b())
-}
-
-fn a() -> i64 {
+pub fn a() -> i64 {
     let f = fs::read_to_string("input/2015/day03.txt").unwrap();
 
     let mut visit: HashMap<(i64, i64), i64> = HashMap::new();
@@ -35,7 +31,7 @@ fn a() -> i64 {
     visit.len() as i64
 }
 
-fn b() -> i64 {
+pub fn b() -> i64 {
     let f = fs::read_to_string("input/2015/day03.txt").unwrap();
 
     let mut visit: HashMap<(i64, i64), i64> = HashMap::new();

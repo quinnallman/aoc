@@ -1,9 +1,5 @@
 use std::{io::{BufReader, BufRead}, fs::File, collections::HashMap};
 
-pub fn run() -> (i64, i64) {
-    (a(), b())
-}
-
 fn eval(expr: String, wires: &mut HashMap<String, String>) -> u16 {
     if expr.contains(" AND ") {
         let index = expr.find(" AND ").unwrap();
@@ -37,7 +33,7 @@ fn eval(expr: String, wires: &mut HashMap<String, String>) -> u16 {
     }
 }
 
-fn a() -> i64 {
+pub fn a() -> i64 {
     let f = BufReader::new(File::open("input/2015/day07.txt").unwrap());
     let mut wires = HashMap::<String, String>::new();
     for line in f.lines().map(|x| x.unwrap()) {
@@ -52,7 +48,7 @@ fn a() -> i64 {
     ret as i64
 }
 
-fn b() -> i64 {
+pub fn b() -> i64 {
     let f = BufReader::new(File::open("input/2015/day07.txt").unwrap());
     let mut wires = HashMap::<String, String>::new();
     for line in f.lines().map(|x| x.unwrap()) {

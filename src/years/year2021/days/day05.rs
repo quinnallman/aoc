@@ -1,10 +1,6 @@
 use std::{fs::File, io::BufReader, io::BufRead};
 
-pub fn run() -> (i64, i64) {
-    (a(), b())
-}
-
-fn a() -> i64 {
+pub fn a() -> i64 {
     let f = BufReader::new(File::open("input/2021/day05.txt").unwrap());
     let mut map = [[0usize; 1000]; 1000];
 
@@ -45,7 +41,7 @@ fn a() -> i64 {
     count
 }
 
-fn b() -> i64 {
+pub fn b() -> i64 {
     let f = BufReader::new(File::open("input/2021/day05.txt").unwrap());
     let mut map = [[0usize; 1000]; 1000];
 

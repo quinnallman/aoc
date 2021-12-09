@@ -1,11 +1,7 @@
 use std::io::{BufReader, BufRead};
 use std::fs::File;
 
-pub fn run() -> (i64, i64) {
-    (a(), b())
-}
-
-fn a() -> i64 {
+pub fn a() -> i64 {
     let f = BufReader::new(File::open("input/2021/day02.txt").unwrap());
     let mut position = (0, 0);
     
@@ -34,7 +30,7 @@ fn a() -> i64 {
     position.0 * position.1
 }
 
-fn b() -> i64 {
+pub fn b() -> i64 {
     let f = BufReader::new(File::open("input/2021/day02.txt").unwrap());
     let mut position = (0, 0, 0);
     

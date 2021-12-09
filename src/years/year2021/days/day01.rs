@@ -1,11 +1,7 @@
 use std::io::{BufReader, BufRead};
 use std::fs::File;
 
-pub fn run() -> (i64, i64) {
-    (a(), b())
-}
-
-fn a() -> i64 {
+pub fn a() -> i64 {
     let f = BufReader::new(File::open("input/2021/day01.txt").unwrap());
     let mut count = 0;
     let mut last = 0;
@@ -21,7 +17,7 @@ fn a() -> i64 {
     count
 }
 
-fn b() -> i64 {
+pub fn b() -> i64 {
     let f = BufReader::new(File::open("input/2021/day01.txt").unwrap());
     let mut nums: Vec<i64> = Vec::new();
     for line in f.lines() {

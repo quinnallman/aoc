@@ -1,11 +1,7 @@
 use std::{fs::File, io::BufReader, io::BufRead, collections::HashMap};
 use itertools::Itertools;
 
-pub fn run() -> (i64, i64) {
-    (a(), b())
-}
-
-fn a() -> i64 {
+pub fn a() -> i64 {
     let f = BufReader::new(File::open("input/2021/day08.txt").unwrap());
     let mut count = 0;
 
@@ -49,7 +45,7 @@ fn proper(word: &str, map: &HashMap<char, char>) -> String {
     x
 }
 
-fn b() -> i64 {
+pub fn b() -> i64 {
     let f = BufReader::new(File::open("input/2021/day08.txt").unwrap());
 
     let mut count = 0;
@@ -69,7 +65,7 @@ fn b() -> i64 {
         let fives: Vec<&str> = input
             .iter()
             .filter(|&&x| x.len() == 5)
-            .map(|&x| x)
+            .copied()
             .collect();
         let seven = *input
             .iter()
@@ -81,60 +77,53 @@ fn b() -> i64 {
             .unwrap();
 
         let chars = vec!['a', 'b', 'c', 'd', 'e', 'f', 'g'];
-        let a = seven
+        let seg_a = seven
             .chars()
-            .filter(|x| !one.contains(*x))
-            .next()
+            .find(|&x| !one.contains(x))
             .unwrap();
-        let d = four
+        let seg_d = four
             .chars()
-            .filter(|&c| fives.iter().all(|&f| f.contains(c)))
-            .next()
+            .find(|&c| fives.iter().all(|&f| f.contains(c)))
             .unwrap();
-        let g = *chars
+        let seg_g = *chars
             .iter()
-            .filter(|&&c| fives.iter().all(|&f| f.contains(c)) && c != a && c != d)
-            .next()
+            .find(|&&c| fives.iter().all(|&f| f.contains(c)) && c != seg_a && c != seg_d)
             .unwrap();
-        let b = *chars
+        let seg_b = *chars
             .iter()
-            .filter(|&&c| four.contains(c) && !one.contains(c) && c != d)
-            .next()
+            .find(|&&c| four.contains(c) && !one.contains(c) && c != seg_d)
             .unwrap();
         let five = *fives
             .iter()
-            .find(|&&x| x.contains(b))
+            .find(|&&x| x.contains(seg_b))
             .unwrap();
-        let f = five
+        let seg_f = five
             .chars()
-            .filter(|&c| c != a && c != b && c != d && c != g)
-            .next()
+            .find(|&c| c != seg_a && c != seg_b && c != seg_d && c != seg_g)
             .unwrap();
-        let c = one
+        let seg_c = one
             .chars()
-            .filter(|&c| c != f)
-            .next()
+            .find(|&ch| ch != seg_f)
             .unwrap();
-        let e = eight
+        let seg_e = eight
             .chars()
-            .filter(|&ch| ch != a && ch != b && ch != c && ch != d && ch != f && ch != g)
-            .next()
+            .find(|&ch| ch != seg_a && ch != seg_b && ch != seg_c && ch != seg_d && ch != seg_f && ch != seg_g)
             .unwrap();
         
         let mut map: HashMap<char, char> = HashMap::new();
-        map.insert(a, 'a');
-        map.insert(b, 'b');
-        map.insert(c, 'c');
-        map.insert(d, 'd');
-        map.insert(e, 'e');
-        map.insert(f, 'f');
-        map.insert(g, 'g');
+        map.insert(seg_a, 'a');
+        map.insert(seg_b, 'b');
+        map.insert(seg_c, 'c');
+        map.insert(seg_d, 'd');
+        map.insert(seg_e, 'e');
+        map.insert(seg_f, 'f');
+        map.insert(seg_g, 'g');
 
         let x = output
             .iter()
             .map(|&o| {
                 let x = &proper(o, &map)[..];
-                return decode(x) as u32;
+                decode(x) as u32
             })
             .reduce(|a, b| a*10+b)
             .unwrap();

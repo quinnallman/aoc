@@ -1,8 +1,4 @@
-pub fn run() -> (i64, i64) {
-    (a(), b())
-}
-
-fn a() -> i64 {
+pub fn a() -> i64 {
     let mut input: Vec<i64> = std::fs::read_to_string("input/2021/day06.txt").unwrap().split(',').map(|x| x.parse::<i64>().unwrap()).collect();
     let mut new_fish = Vec::<i64>::new();
 
@@ -22,7 +18,7 @@ fn a() -> i64 {
     input.len() as i64
 }
 
-fn b() -> i64 {
+pub fn b() -> i64 {
     let input: Vec<i64> = std::fs::read_to_string("input/2021/day06.txt").unwrap().split(',').map(|x| x.parse::<i64>().unwrap()).collect();
 
     // sum of fish for each "age" (days until multiplying)

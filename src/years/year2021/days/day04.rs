@@ -1,10 +1,6 @@
 use std::io::{BufReader, BufRead, Lines};
 use std::fs::File;
 
-pub fn run() -> (i64, i64) {
-    a()
-}
-
 fn read_board<B: BufRead>(iter: &mut Lines<B>) -> Option<[i64; 25]> {
     let mut ret = [1000; 25];
     let mut index = 0;
@@ -69,14 +65,12 @@ fn sum_unmarked(board: [i64; 25]) -> i64 {
     sum
 }
 
-fn a() -> (i64, i64) {
+pub fn a() -> i64 {
     let f = BufReader::new(File::open("input/2021/day04.txt").unwrap());
     let mut iter = f.lines();
     let moves: Vec<i64> = iter.next().unwrap().unwrap().split(',').map(|x| x.parse::<i64>().unwrap()).collect();
     let mut min_moves: i64 = 1000000;
-    let mut max_moves: i64 = 0;
     let mut sum = 0;
-    let mut sum_max = 0;
 
     loop {
         let board = read_board(&mut iter);
@@ -99,6 +93,38 @@ fn a() -> (i64, i64) {
                     min_moves = i as i64 + 1;
                     sum = sum_unmarked(board) * *called;
                 }
+                break;
+            }
+        }
+    }
+
+    sum
+}
+
+pub fn b() -> i64 {
+    let f = BufReader::new(File::open("input/2021/day04.txt").unwrap());
+    let mut iter = f.lines();
+    let moves: Vec<i64> = iter.next().unwrap().unwrap().split(',').map(|x| x.parse::<i64>().unwrap()).collect();
+    let mut max_moves: i64 = 0;
+    let mut sum_max = 0;
+
+    loop {
+        let board = read_board(&mut iter);
+        if board.is_none() {
+            break;
+        }
+
+        let mut board = board.unwrap();
+
+        for (i, called) in moves.iter().enumerate() {
+            for (j, square) in board.iter().enumerate() {
+                if *square == *called {
+                    board[j] = -*called;
+                    break;
+                }
+            }
+
+            if board_wins(board) {
                 if i as i64 + 1 > max_moves {
                     max_moves = i as i64 + 1;
                     sum_max = sum_unmarked(board) * *called;
@@ -108,5 +134,5 @@ fn a() -> (i64, i64) {
         }
     }
 
-    (sum, sum_max)
+    sum_max
 }

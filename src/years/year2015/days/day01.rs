@@ -1,10 +1,6 @@
 use std::fs;
 
-pub fn run() -> (i64, i64) {
-    (a(), b())
-}
-
-fn a() -> i64 {
+pub fn a() -> i64 {
     let f = fs::read_to_string("input/2015/day01.txt").unwrap();
 
     let mut floor = 0;
@@ -19,7 +15,7 @@ fn a() -> i64 {
     floor
 }
 
-fn b() -> i64 {
+pub fn b() -> i64 {
     let f = fs::read_to_string("input/2015/day01.txt").unwrap();
 
     let mut floor = 0;

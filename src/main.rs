@@ -1,47 +1,48 @@
 mod years;
 
-use ansi_term::Colour::{Green, Red, Yellow};
-use years::year2015::days::{day01, day02, day03, day04, day05, day06, day07, day08, day09};
-//use years::year2021::days::{day01, day02, day03, day04, day05, day06, day07, day08};
 use std::env;
 use std::time::Instant;
+use ansi_term::Colour::{Green, Red, Yellow};
+
+use years::year2015;
+use years::year2021;
 
 fn main() {
     let args: Vec<String> = env::args().collect();
     if args.len() < 2 {
         println!("Usage: {} <day number>", args[0]);
+        println!("    <day number> can include a year, or it will default to the current year");
+        println!("    Examples:");
+        println!("        {} 1", args[0]);
+        println!("        {} 1 2 3 4 5", args[0]);
+        println!("        {} 2015:1 2021:3 7", args[0]);
         std::process::exit(1);
     }
 
-    let days: Vec<i64> = args.iter().skip(1).filter_map(|day|
-        day.parse::<i64>().ok()
-    ).collect();
-    
-    for (i, day) in days.iter().enumerate() {
-        let func = match day {
-            1 => day01::run,
-            2 => day02::run,
-            3 => day03::run,
-            4 => day04::run,
-            5 => day05::run,
-            6 => day06::run,
-            7 => day07::run,
-            8 => day08::run,
-            9 => day09::run,
+    for arg in args.iter().skip(1) {
+        let mut day_vec: Vec<&str> = arg.split(':').collect();
+        let mut year = 2021;
+        let day = day_vec.pop().unwrap().parse::<i64>().unwrap();
+        if !day_vec.is_empty() {
+            year = day_vec.pop().unwrap().parse::<i64>().unwrap();
+        }
+
+        let func = match year {
+            2015 => year2015::run,
+            2021 => year2021::run,
             _ => {
-                println!("{}", Red.paint(format!("!!! I don't know what to do for day {} !!!", day)));
-                break;
+                println!("{}", Red.paint(format!("!!! I don't know what to do for year {}!!!", year)));
+                continue;
             },
         };
 
-        println!("{}", Yellow.paint(format!("=== Day {:02} ===", day)));
+        println!("{}", Yellow.paint(format!("=== AOC {} Day {:02} ===", year, day)));
         let start = Instant::now();
-        let result = func();
-        let duration = start.elapsed();
-        println!("({}, {}) ({:.3}ms)", Green.paint(result.0.to_string()), Green.paint(result.1.to_string()), duration.as_secs_f32() * 1000f32);
-
-        if i < days.len() - 1 {
-            println!();
+        if let Some(result) = func(day) {
+            let duration = start.elapsed();
+            println!("({}, {}) ({:.3}ms)", Green.paint(result.0.to_string()), Green.paint(result.1.to_string()), duration.as_secs_f32() * 1000f32);
+        } else {
+            println!("{}", Red.paint(format!("!!! I don't know what to do for day {} in {}!!!", day, arg)));
         }
-    }
+   }
 }
