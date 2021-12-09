@@ -67,8 +67,7 @@ pub fn a() -> i64 {
     const H: usize = 100;
     let mut heightmap: [[i64; W]; H] = [[0; W]; H];
 
-    let mut i = 0;
-    for line in f.lines() {
+    for (i, line) in f.lines().enumerate() {
         let mut j = 0;
         line
             .unwrap()
@@ -78,8 +77,6 @@ pub fn a() -> i64 {
                 heightmap[i][j] = height;
                 j += 1;
             });
-
-        i += 1;
     }
 
     let mut sum = 0;
@@ -99,8 +96,7 @@ pub fn b() -> i64 {
     const H: usize = 100;
     let mut heightmap: [[i64; W]; H] = [[0; W]; H];
 
-    let mut i = 0;
-    for line in f.lines() {
+    for (i, line) in f.lines().enumerate() {
         let mut j = 0;
         line
             .unwrap()
@@ -110,8 +106,6 @@ pub fn b() -> i64 {
                 heightmap[i][j] = height;
                 j += 1;
             });
-
-        i += 1;
     }
 
     let low_points = get_low_points(&heightmap);
@@ -119,10 +113,9 @@ pub fn b() -> i64 {
 
     for low in low_points {
         let mut visited = Vec::new();
-        let mut q = Vec::new();
-        q.push(low);
+        let mut q = vec![low];
 
-        while q.len() > 0 {
+        while !q.is_empty() {
             let p = q.pop().unwrap();
             if heightmap[p.0][p.1] == 9 || visited.contains(&p) {
                 continue;
@@ -131,28 +124,20 @@ pub fn b() -> i64 {
             visited.push(p);
 
             // check left
-            if p.1 > 0 {
-                if heightmap[p.0][p.1-1] >= heightmap[p.0][p.1] {
-                    q.push((p.0, p.1-1));
-                }
+            if p.1 > 0 && heightmap[p.0][p.1-1] >= heightmap[p.0][p.1] {
+                q.push((p.0, p.1-1));
             }
             // check right
-            if p.1 < W-1 {
-                if heightmap[p.0][p.1+1] >= heightmap[p.0][p.1] {
-                    q.push((p.0, p.1+1));
-                }
+            if p.1 < W-1 && heightmap[p.0][p.1+1] >= heightmap[p.0][p.1] {
+                q.push((p.0, p.1+1));
             }
             // check above
-            if p.0 > 0 {
-                if heightmap[p.0-1][p.1] >= heightmap[p.0][p.1] {
-                    q.push((p.0-1, p.1));
-                }
+            if p.0 > 0 && heightmap[p.0-1][p.1] >= heightmap[p.0][p.1] {
+                q.push((p.0-1, p.1));
             }
             // check below
-            if p.0 < H-1 {
-                if heightmap[p.0+1][p.1] >= heightmap[p.0][p.1] {
-                    q.push((p.0+1, p.1));
-                }
+            if p.0 < H-1 && heightmap[p.0+1][p.1] >= heightmap[p.0][p.1] {
+                q.push((p.0+1, p.1));
             }
         }
 
