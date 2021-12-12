@@ -17,6 +17,7 @@ pub fn run(day: i64) -> Option<(i64, i64)> {
         13 => Some((days::day13::a(), days::day13::b())),
         14 => Some((days::day14::a(), days::day14::b())),
         15 => Some((days::day15::a(), days::day15::b())),
+        16 => Some((days::day16::a(), days::day16::b())),
         _ => {
             None
         }
