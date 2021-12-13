@@ -42,9 +42,9 @@ fn print_grid(coords: &[(i64, i64)]) {
     for i in 0..max_y+1 {
         for j in 0..max_x+1 {
             if coords.contains(&(j, i)) {
-                print!("#");
+                print!("█");
             } else {
-                print!(".");
+                print!(" ");
             }
         }
         println!();
