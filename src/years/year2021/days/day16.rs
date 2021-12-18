@@ -34,8 +34,8 @@ fn read_int(bytes: &[u8], index: &mut i64, len: i64) -> i64 {
 impl Packet {
     fn from_bytes(bytes: &[u8], offset: i64) -> Result<Self, ParseIntError> {
         let mut length = offset;
-        let version = read_int(&bytes, &mut length, 3) as u8;
-        let packet_id = read_int(&bytes, &mut length, 3) as u8;
+        let version = read_int(bytes, &mut length, 3) as u8;
+        let packet_id = read_int(bytes, &mut length, 3) as u8;
 
         let data = match packet_id {
             4 => {
@@ -43,12 +43,12 @@ impl Packet {
                 let mut last = false;
 
                 while !last {
-                    let last_val = read_int(&bytes, &mut length, 1);
+                    let last_val = read_int(bytes, &mut length, 1);
                     if last_val == 0 {
                         last = true;
                     }
 
-                    let val = read_int(&bytes, &mut length, 4);
+                    let val = read_int(bytes, &mut length, 4);
 
                     literal <<= 4;
                     literal += val;
@@ -62,13 +62,13 @@ impl Packet {
             },
             _ => {
                 let mut sub_packets: Vec<Packet> = Vec::new();
-                let length_type_id = read_int(&bytes, &mut length, 1);
+                let length_type_id = read_int(bytes, &mut length, 1);
                 if length_type_id == 0 {
-                    let total_length = read_int(&bytes, &mut length, 15);
+                    let total_length = read_int(bytes, &mut length, 15);
                     let mut data_length = 0;
 
                     while data_length < total_length {
-                        let packet = Self::from_bytes(&bytes, length).unwrap();
+                        let packet = Self::from_bytes(bytes, length).unwrap();
                         data_length += packet.length;
                         length += packet.length;
                         sub_packets.push(packet);
@@ -76,9 +76,9 @@ impl Packet {
 
                     PacketData::Operator(length_type_id, total_length, sub_packets)
                 } else {
-                    let num_subpackets = read_int(&bytes, &mut length, 11);
+                    let num_subpackets = read_int(bytes, &mut length, 11);
                     for _ in 0..num_subpackets {
-                        let packet = Self::from_bytes(&bytes, length).unwrap();
+                        let packet = Self::from_bytes(bytes, length).unwrap();
                         length += packet.length;
                         sub_packets.push(packet);
                     }
@@ -119,7 +119,7 @@ fn sum_versions(packet: &Packet) -> i64 {
         PacketData::Operator(_, _, sub_packets) => {
             let mut sum = 0;
             for p in sub_packets {
-                sum += sum_versions(&p);
+                sum += sum_versions(p);
             }
             packet.version as i64 + sum
         },
@@ -129,8 +129,7 @@ fn sum_versions(packet: &Packet) -> i64 {
 pub fn a() -> i64 {
     let f = std::fs::read_to_string("input/2021/day16.txt").unwrap();
     let packet = f.parse::<Packet>().unwrap();
-    let sum = sum_versions(&packet);
-    sum
+    sum_versions(&packet)
 }
 
 fn calc(packet: &Packet) -> i64 {
@@ -143,21 +142,21 @@ fn calc(packet: &Packet) -> i64 {
                 0 => {
                     let mut sum = 0;
                     for p in sub_packets {
-                        sum += calc(&p);
+                        sum += calc(p);
                     }
                     sum
                 },
                 1 => {
                     let mut prod = 1;
                     for p in sub_packets {
-                        prod *= calc(&p);
+                        prod *= calc(p);
                     }
                     prod
                 },
                 2 => {
                     let mut min = i64::MAX;
                     for p in sub_packets {
-                        let v = calc(&p);
+                        let v = calc(p);
                         if v < min {
                             min = v;
                         }
@@ -167,7 +166,7 @@ fn calc(packet: &Packet) -> i64 {
                 3 => {
                     let mut max = 0;
                     for p in sub_packets {
-                        let v = calc(&p);
+                        let v = calc(p);
                         if v > max {
                             max = v;
                         }
@@ -210,6 +209,5 @@ fn calc(packet: &Packet) -> i64 {
 pub fn b() -> i64 {
     let f = std::fs::read_to_string("input/2021/day16.txt").unwrap();
     let packet = f.parse::<Packet>().unwrap();
-    let val = calc(&packet);
-    val
+    calc(&packet)
 }
