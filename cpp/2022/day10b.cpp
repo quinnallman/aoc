@@ -7,7 +7,7 @@ void draw_pixel(int col, int X) {
   if(abs(X - col) < 2)
     cout << '#';
   else
-    cout << '.';
+    cout << ' ';
   if(col + 1 >= 40) {
     cout << endl;
   }
