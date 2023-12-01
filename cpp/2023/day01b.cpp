@@ -1,55 +1,49 @@
 #include <iostream>
 #include <vector>
+#include <algorithm>
+
+const std::vector<std::string> numbers {
+  "one",
+  "two",
+  "three",
+  "four",
+  "five",
+  "six",
+  "seven",
+  "eight",
+  "nine",
+};
+
+std::string find_first_number(std::string s, bool digitsOnly, bool reversed) {
+  for(size_t i = 0 ; i < s.length() ; i++) {
+    if(s[i] >= '0' && s[i] <= '9') {
+      return std::string { s[i] };
+    } else if(!digitsOnly) {
+      for(size_t j = 0 ; j < numbers.size() ; j++) {
+        std::string num(numbers[j]);
+        if(reversed) std::reverse(num.begin(), num.end());
+
+        if(s.substr(i, numbers[j].length()) == num) {
+          return std::string{static_cast<char>('0' + j + 1)};
+        }
+      }
+    }
+  }
+
+  return "";
+}
 
 int main() {
   int sum = 0;
   std::string line;
-  std::vector<std::string> numbers {
-    "one",
-    "two",
-    "three",
-    "four",
-    "five",
-    "six",
-    "seven",
-    "eight",
-    "nine",
-  };
 
   while(getline(std::cin, line)) {
-    std::string first;
-    std::string last;
+    std::string first = find_first_number(line, false, false);
+    std::string copy(line);
+    std::reverse(copy.begin(), copy.end());
+    std::string last = find_first_number(copy, false, true);
 
-    for(size_t i = 0 ; i < line.length() && first.length() < 1 ; i++) {
-      if(line[i] >= '0' && line[i] <= '9') {
-        first = line[i];
-        break;
-      } else {
-        for(size_t j = 0 ; j < numbers.size() ; j++) {
-          auto num = numbers[j];
-          if(line.substr(i, num.length()) == num) {
-            first = '0' + j + 1;
-            break;
-          }
-        }
-      }
-    }
-
-    for(int i = line.length() - 1 ; i >= 0 && last.length() < 1 ; i--) {
-      if(line[i] >= '0' && line[i] <= '9') {
-        last = line[i];
-        break;
-      } else {
-        for(size_t j = 0 ; j < numbers.size() ; j++) {
-          auto num = numbers[j];
-          if(line.substr(i, num.length()) == num) {
-            last = '0' + j + 1;
-            break;
-          }
-        }
-      }
-    }
-
+    std::cout << first << ' ' << last << ' ' << std::stoi("" + first + last) << '\n';
     sum += std::stoi("" + first + last);
   }
 
