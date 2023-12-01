@@ -20,12 +20,12 @@ int main() {
     std::string first;
     std::string last;
 
-    for(int i = 0 ; i < line.length() && first.length() < 1 ; i++) {
+    for(size_t i = 0 ; i < line.length() && first.length() < 1 ; i++) {
       if(line[i] >= '0' && line[i] <= '9') {
         first = line[i];
         break;
       } else {
-        for(int j = 0 ; j < numbers.size() ; j++) {
+        for(size_t j = 0 ; j < numbers.size() ; j++) {
           auto num = numbers[j];
           if(line.substr(i, num.length()) == num) {
             first = '0' + j + 1;
@@ -40,7 +40,7 @@ int main() {
         last = line[i];
         break;
       } else {
-        for(int j = 0 ; j < numbers.size() ; j++) {
+        for(size_t j = 0 ; j < numbers.size() ; j++) {
           auto num = numbers[j];
           if(line.substr(i, num.length()) == num) {
             last = '0' + j + 1;
