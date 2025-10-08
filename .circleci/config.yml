@@ -1,35 +1,20 @@
-# This config was automatically generated from your source code
-# Stacks detected: deps:rust:rust
 version: 2.1
 jobs:
-  test-rust:
+  build:
     docker:
-      - image: cimg/rust:1.70
-    working_directory: ~/project/rust
+      - image: cimg/node:current
+    working_directory: /tmp
     steps:
-      - checkout:
-          path: ~/project
-      - restore_cache:
-          key: cargo-{{ checksum "Cargo.lock" }}
       - run:
-          command: cargo test
-      - save_cache:
-          key: cargo-{{ checksum "Cargo.lock" }}
-          paths:
-            - ~/.cargo
-  deploy:
-    # This is an example deploy job, not actually used by the workflow
-    docker:
-      - image: cimg/base:stable
-    steps:
-      # Replace this with steps to deploy to users
-      - run:
-          name: deploy
-          command: '#e.g. ./deploy.sh'
-workflows:
-  build-and-test:
-    jobs:
-      - test-rust
-    # - deploy:
-    #     requires:
-    #       - test-rust
+          name: Creating Dummy Artifacts
+          command: |
+            echo "my artifact file" > /tmp/art-1;
+            mkdir /tmp/artifacts;
+            echo "my artifact files in a dir" > /tmp/artifacts/art-2;
+
+      - store_artifacts:
+          path: /tmp/art-1
+          destination: artifact-file
+
+      - store_artifacts:
+          path: /tmp/artifacts
